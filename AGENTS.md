@@ -31,6 +31,24 @@ Routes:
 - `hybrid`: Codex does reasoning/retrieval/architecture, Qwen executes the
   bounded high-volume portion, then Codex reviews.
 
+
+### Route authority
+
+The final route returned by the Control Plane is authoritative for execution.
+Do not replace `worker` or `hybrid` with `codex` merely because a Codex skill,
+custom agent, or local capability appears suitable. Skills describe HOW to
+execute the selected route; they do not choose a different route.
+
+When the final route is `worker` or `hybrid` and `worker_required=true`,
+attempt the bounded worker delegation before doing the token-heavy portion in
+Codex. Codex may take over only after an actual worker/control-plane failure
+covered by the failover rules.
+
+For `hybrid`, Codex must retain the high-value portion (outline, decisions,
+facts, retrieval, acceptance criteria, review) and delegate the identified
+high-volume portion. Do not interpret `hybrid` as permission for Codex to do
+the entire task without attempting delegation.
+
 ## Hard failover
 
 The router and Qwen are optional optimizations.

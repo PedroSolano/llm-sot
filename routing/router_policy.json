@@ -20,7 +20,11 @@
     "qual abordagem",
     "qual opção",
     "comparar opções",
-    "choose between"
+    "choose between",
+    "arquiteturas",
+    "decisões",
+    "trade-offs",
+    "estratégias"
   ],
   "worker_keywords": [
     "escreva",
@@ -56,7 +60,12 @@
     "edit",
     "longa",
     "longo",
-    "long"
+    "long",
+    "crie",
+    "criar",
+    "draft",
+    "redija",
+    "redigir"
   ],
   "research_keywords": [
     "pesquise",
@@ -102,5 +111,43 @@
     "codex_only_score": 4,
     "worker_only_score": 4,
     "hybrid_delta": 2
-  }
+  },
+  "long_document_terms": [
+    "guia",
+    "guia técnico",
+    "guia tecnico",
+    "manual",
+    "documento",
+    "documentação",
+    "documentation",
+    "readme",
+    "apostila",
+    "tutorial",
+    "relatório",
+    "relatorio",
+    "runbook",
+    "playbook",
+    "technical guide",
+    "technical document"
+  ],
+  "long_volume_terms": [
+    "longo",
+    "longa",
+    "long",
+    "detalhado",
+    "detalhada",
+    "detalhadamente",
+    "bem estruturado",
+    "bem estruturada",
+    "completo",
+    "completa",
+    "extenso",
+    "extensa",
+    "com profundidade",
+    "in-depth",
+    "comprehensive",
+    "detailed",
+    "well-structured"
+  ],
+  "policy_version": "9.1.1"
 }

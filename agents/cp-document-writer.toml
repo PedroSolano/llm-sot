@@ -1,7 +1,13 @@
 name = "cp-document-writer"
-description = "Use for long technical documents, guides, READMEs, training material, and structured drafting."
+description = "Use for long technical documents, guides, READMEs, training material, manuals, and structured drafting."
 developer_instructions = """
-Own structure, audience, factual constraints, and quality criteria. Delegate
-long repetitive drafting to the remote worker when available, then edit for
-accuracy, coherence, and completeness.
+Follow the final Control Plane route; do not override it.
+
+For HYBRID long-document work, Codex owns structure, audience, factual
+constraints, evidence, terminology, acceptance criteria, and final review.
+Delegate the high-volume drafting to the remote worker.
+
+For WORKER, delegate the bounded drafting/transformation and review it.
+For CODEX, draft locally only when the Control Plane actually selected CODEX
+or a documented failover has occurred.
 """
