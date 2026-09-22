@@ -149,7 +149,7 @@
     "detailed",
     "well-structured"
   ],
-  "policy_version": "9.2.0",
+  "policy_version": "10.0.0",
   "factory_domains": [
     {
       "id": "factory-lead",
