@@ -1,0 +1,82 @@
+{
+  "version": "9.2.0",
+  "principles": {
+    "selective_roles": "Do not invoke every discipline mechanically; select only roles relevant to the change.",
+    "route_authority": "Control Plane route remains authoritative.",
+    "handoff": "Each phase must hand off explicit artifacts/constraints to the next phase.",
+    "quality": "Code-changing work requires QA evidence and code review before final delivery."
+  },
+  "workflows": {
+    "feature-delivery": {
+      "stages": [
+        "product-analysis",
+        "architecture",
+        "ux-ui",
+        "frontend/backend/data as needed",
+        "qa",
+        "security when relevant",
+        "code-review",
+        "release",
+        "sre-observability when deployable",
+        "documentation"
+      ],
+      "mandatory_gates": [
+        "acceptance-criteria",
+        "qa",
+        "code-review"
+      ]
+    },
+    "bugfix": {
+      "stages": [
+        "debugging",
+        "implementation owner",
+        "qa",
+        "code-review",
+        "release if deployed"
+      ],
+      "mandatory_gates": [
+        "root-cause-evidence",
+        "regression-test",
+        "code-review"
+      ]
+    },
+    "infra-change": {
+      "stages": [
+        "architecture",
+        "devops-platform",
+        "security",
+        "qa",
+        "sre-observability",
+        "release"
+      ],
+      "mandatory_gates": [
+        "plan/validate",
+        "security-review",
+        "rollback"
+      ]
+    },
+    "data-change": {
+      "stages": [
+        "architecture/data",
+        "backend when coupled",
+        "qa",
+        "security when sensitive",
+        "release"
+      ],
+      "mandatory_gates": [
+        "migration-safety",
+        "data-validation",
+        "rollback"
+      ]
+    },
+    "docs-only": {
+      "stages": [
+        "documentation",
+        "code-review/technical-review"
+      ],
+      "mandatory_gates": [
+        "technical-accuracy"
+      ]
+    }
+  }
+}

@@ -1,0 +1,461 @@
+{
+  "version": "9.2.0",
+  "roles": [
+    {
+      "id": "factory-lead",
+      "agent": "cp-factory-lead",
+      "skills": [
+        "software-factory",
+        "orchestration"
+      ],
+      "worker_capable": false,
+      "keywords": [
+        "fábrica de software",
+        "fabrica de software",
+        "software factory",
+        "end-to-end",
+        "projeto completo",
+        "aplicação completa",
+        "aplicacao completa"
+      ],
+      "responsibilities": [
+        "decompose delivery",
+        "select relevant disciplines",
+        "define gates",
+        "coordinate handoffs"
+      ],
+      "handoff": "Produce a delivery map with owners, dependencies, quality gates and acceptance criteria."
+    },
+    {
+      "id": "product-analysis",
+      "agent": "cp-product-analyst",
+      "skills": [
+        "requirements-analysis"
+      ],
+      "worker_capable": true,
+      "keywords": [
+        "requisito",
+        "requisitos",
+        "user story",
+        "história de usuário",
+        "historia de usuario",
+        "backlog",
+        "critério de aceite",
+        "criterio de aceite",
+        "regra de negócio",
+        "regra de negocio",
+        "escopo",
+        "discovery"
+      ],
+      "responsibilities": [
+        "requirements",
+        "user stories",
+        "acceptance criteria",
+        "scope and assumptions"
+      ],
+      "handoff": "Provide unambiguous requirements and testable acceptance criteria."
+    },
+    {
+      "id": "architecture",
+      "agent": "cp-solution-architect",
+      "skills": [
+        "architecture-design",
+        "api-contracts"
+      ],
+      "worker_capable": false,
+      "keywords": [
+        "arquitetura",
+        "architecture",
+        "design de sistema",
+        "system design",
+        "trade-off",
+        "tradeoff",
+        "integração",
+        "integracao",
+        "escalabilidade",
+        "resiliência",
+        "resiliencia"
+      ],
+      "responsibilities": [
+        "system boundaries",
+        "interfaces",
+        "NFRs",
+        "trade-offs",
+        "ADRs"
+      ],
+      "handoff": "Provide architecture decisions, contracts, constraints and risks before implementation."
+    },
+    {
+      "id": "ux-ui",
+      "agent": "cp-ux-ui-designer",
+      "skills": [
+        "ux-ui-design"
+      ],
+      "worker_capable": true,
+      "keywords": [
+        "ux",
+        "ui",
+        "wireframe",
+        "protótipo",
+        "prototipo",
+        "usabilidade",
+        "design system",
+        "interface",
+        "experiência do usuário",
+        "experiencia do usuario"
+      ],
+      "responsibilities": [
+        "flows",
+        "information architecture",
+        "interaction states",
+        "accessibility",
+        "visual consistency"
+      ],
+      "handoff": "Provide flows, states, component behavior and accessibility expectations."
+    },
+    {
+      "id": "frontend",
+      "agent": "cp-frontend-developer",
+      "skills": [
+        "frontend-engineering",
+        "qa-testing"
+      ],
+      "worker_capable": true,
+      "keywords": [
+        "frontend",
+        "front-end",
+        "react",
+        "vue",
+        "angular",
+        "typescript",
+        "javascript",
+        "html",
+        "css",
+        "componente",
+        "component",
+        "browser",
+        "spa"
+      ],
+      "responsibilities": [
+        "UI implementation",
+        "state management",
+        "client contracts",
+        "accessibility",
+        "frontend tests"
+      ],
+      "handoff": "Implement against approved UX/API contracts and provide tests/build evidence."
+    },
+    {
+      "id": "backend",
+      "agent": "cp-backend-developer",
+      "skills": [
+        "backend-engineering",
+        "api-contracts",
+        "qa-testing"
+      ],
+      "worker_capable": true,
+      "keywords": [
+        "backend",
+        "back-end",
+        "api",
+        "endpoint",
+        "serviço",
+        "servico",
+        "microserviço",
+        "microservico",
+        "rest",
+        "graphql",
+        "worker",
+        "fila",
+        "queue"
+      ],
+      "responsibilities": [
+        "domain logic",
+        "APIs",
+        "integration",
+        "validation",
+        "backend tests"
+      ],
+      "handoff": "Implement bounded backend behavior against architecture/contracts and provide tests."
+    },
+    {
+      "id": "data",
+      "agent": "cp-data-engineer",
+      "skills": [
+        "data-persistence",
+        "qa-testing"
+      ],
+      "worker_capable": true,
+      "keywords": [
+        "banco de dados",
+        "database",
+        "sql",
+        "schema",
+        "tabela",
+        "migration",
+        "migração",
+        "migracao",
+        "índice",
+        "indice",
+        "query",
+        "persistência",
+        "persistencia",
+        "etl"
+      ],
+      "responsibilities": [
+        "data modeling",
+        "migrations",
+        "queries",
+        "integrity",
+        "performance"
+      ],
+      "handoff": "Provide schema/migration changes, rollback considerations and data validation."
+    },
+    {
+      "id": "qa",
+      "agent": "cp-qa-engineer",
+      "skills": [
+        "qa-testing"
+      ],
+      "worker_capable": true,
+      "keywords": [
+        "qa",
+        "teste",
+        "testes",
+        "test",
+        "tests",
+        "e2e",
+        "regressão",
+        "regressao",
+        "coverage",
+        "cobertura",
+        "caso de teste",
+        "test case",
+        "quality assurance"
+      ],
+      "responsibilities": [
+        "test strategy",
+        "test cases",
+        "automation",
+        "regression",
+        "evidence"
+      ],
+      "handoff": "Return test coverage, execution evidence, failures and residual risks."
+    },
+    {
+      "id": "security",
+      "agent": "cp-security-engineer",
+      "skills": [
+        "application-security",
+        "architecture-design"
+      ],
+      "worker_capable": false,
+      "keywords": [
+        "segurança",
+        "seguranca",
+        "security",
+        "auth",
+        "oauth",
+        "oidc",
+        "jwt",
+        "iam",
+        "vulnerabilidade",
+        "vulnerability",
+        "threat",
+        "ameaça",
+        "ameaca",
+        "secret",
+        "criptografia",
+        "encryption"
+      ],
+      "responsibilities": [
+        "threat modeling",
+        "authn/authz",
+        "secrets",
+        "secure defaults",
+        "abuse cases"
+      ],
+      "handoff": "Return security requirements, findings, mitigations and blocking/non-blocking risks."
+    },
+    {
+      "id": "devops-platform",
+      "agent": "cp-devops-platform-engineer",
+      "skills": [
+        "devops-cicd",
+        "application-security"
+      ],
+      "worker_capable": true,
+      "keywords": [
+        "devops",
+        "ci/cd",
+        "cicd",
+        "pipeline",
+        "github actions",
+        "gitlab ci",
+        "docker",
+        "kubernetes",
+        "terraform",
+        "iac",
+        "deploy",
+        "deployment",
+        "helm",
+        "container"
+      ],
+      "responsibilities": [
+        "build/release automation",
+        "IaC",
+        "environments",
+        "deployment safety",
+        "supply chain"
+      ],
+      "handoff": "Provide reproducible pipeline/IaC changes, validation and rollback path."
+    },
+    {
+      "id": "sre-observability",
+      "agent": "cp-sre-observability-engineer",
+      "skills": [
+        "sre-observability"
+      ],
+      "worker_capable": true,
+      "keywords": [
+        "sre",
+        "observabilidade",
+        "observability",
+        "monitoramento",
+        "monitoring",
+        "logging",
+        "logs",
+        "métrica",
+        "metrica",
+        "metrics",
+        "alerta",
+        "alert",
+        "slo",
+        "sli",
+        "incident",
+        "incidente",
+        "tracing"
+      ],
+      "responsibilities": [
+        "SLIs/SLOs",
+        "logs/metrics/traces",
+        "alerts",
+        "runbooks",
+        "operability"
+      ],
+      "handoff": "Provide operational signals, thresholds, dashboards/alerts and runbook impact."
+    },
+    {
+      "id": "code-review",
+      "agent": "cp-code-reviewer",
+      "skills": [
+        "code-review"
+      ],
+      "worker_capable": false,
+      "keywords": [
+        "code review",
+        "review de código",
+        "review de codigo",
+        "pull request",
+        "pr review",
+        "revisar código",
+        "revisar codigo"
+      ],
+      "responsibilities": [
+        "correctness",
+        "maintainability",
+        "regressions",
+        "consistency",
+        "risk"
+      ],
+      "handoff": "Return actionable findings ordered by severity with verification notes."
+    },
+    {
+      "id": "release",
+      "agent": "cp-release-manager",
+      "skills": [
+        "release-management"
+      ],
+      "worker_capable": true,
+      "keywords": [
+        "release",
+        "versão",
+        "versao",
+        "versionamento",
+        "semver",
+        "changelog",
+        "rollback",
+        "go-live",
+        "produção",
+        "producao"
+      ],
+      "responsibilities": [
+        "release readiness",
+        "versioning",
+        "change notes",
+        "rollback",
+        "go/no-go evidence"
+      ],
+      "handoff": "Return release checklist, version/changelog and rollback/readiness status."
+    },
+    {
+      "id": "documentation",
+      "agent": "cp-technical-writer",
+      "skills": [
+        "technical-documentation",
+        "long-document"
+      ],
+      "worker_capable": true,
+      "keywords": [
+        "documentação",
+        "documentacao",
+        "documentation",
+        "readme",
+        "manual",
+        "guia",
+        "tutorial",
+        "runbook",
+        "apostila"
+      ],
+      "responsibilities": [
+        "technical documentation",
+        "guides",
+        "runbooks",
+        "developer docs",
+        "consistency"
+      ],
+      "handoff": "Return audience-appropriate docs validated against the implemented behavior."
+    },
+    {
+      "id": "debugging",
+      "agent": "cp-debugger",
+      "skills": [
+        "debugging-triage",
+        "qa-testing"
+      ],
+      "worker_capable": true,
+      "keywords": [
+        "debug",
+        "debugging",
+        "erro",
+        "error",
+        "bug",
+        "falha",
+        "failure",
+        "stack trace",
+        "traceback",
+        "root cause",
+        "causa raiz",
+        "troubleshooting"
+      ],
+      "responsibilities": [
+        "reproduce",
+        "isolate",
+        "hypothesize",
+        "verify root cause",
+        "regression test"
+      ],
+      "handoff": "Return reproduced symptoms, root cause evidence, fix scope and regression checks."
+    }
+  ]
+}

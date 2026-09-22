@@ -149,5 +149,394 @@
     "detailed",
     "well-structured"
   ],
-  "policy_version": "9.1.1"
+  "policy_version": "9.2.0",
+  "factory_domains": [
+    {
+      "id": "factory-lead",
+      "keywords": [
+        "fábrica de software",
+        "fabrica de software",
+        "software factory",
+        "end-to-end",
+        "projeto completo",
+        "aplicação completa",
+        "aplicacao completa"
+      ],
+      "agents": [
+        "cp-factory-lead"
+      ],
+      "skills": [
+        "software-factory",
+        "orchestration"
+      ],
+      "worker_capable": false
+    },
+    {
+      "id": "product-analysis",
+      "keywords": [
+        "requisito",
+        "requisitos",
+        "user story",
+        "história de usuário",
+        "historia de usuario",
+        "backlog",
+        "critério de aceite",
+        "criterio de aceite",
+        "regra de negócio",
+        "regra de negocio",
+        "escopo",
+        "discovery"
+      ],
+      "agents": [
+        "cp-product-analyst"
+      ],
+      "skills": [
+        "requirements-analysis"
+      ],
+      "worker_capable": true
+    },
+    {
+      "id": "architecture",
+      "keywords": [
+        "arquitetura",
+        "architecture",
+        "design de sistema",
+        "system design",
+        "trade-off",
+        "tradeoff",
+        "integração",
+        "integracao",
+        "escalabilidade",
+        "resiliência",
+        "resiliencia"
+      ],
+      "agents": [
+        "cp-solution-architect"
+      ],
+      "skills": [
+        "architecture-design",
+        "api-contracts"
+      ],
+      "worker_capable": false
+    },
+    {
+      "id": "ux-ui",
+      "keywords": [
+        "ux",
+        "ui",
+        "wireframe",
+        "protótipo",
+        "prototipo",
+        "usabilidade",
+        "design system",
+        "interface",
+        "experiência do usuário",
+        "experiencia do usuario"
+      ],
+      "agents": [
+        "cp-ux-ui-designer"
+      ],
+      "skills": [
+        "ux-ui-design"
+      ],
+      "worker_capable": true
+    },
+    {
+      "id": "frontend",
+      "keywords": [
+        "frontend",
+        "front-end",
+        "react",
+        "vue",
+        "angular",
+        "typescript",
+        "javascript",
+        "html",
+        "css",
+        "componente",
+        "component",
+        "browser",
+        "spa"
+      ],
+      "agents": [
+        "cp-frontend-developer"
+      ],
+      "skills": [
+        "frontend-engineering",
+        "qa-testing"
+      ],
+      "worker_capable": true
+    },
+    {
+      "id": "backend",
+      "keywords": [
+        "backend",
+        "back-end",
+        "api",
+        "endpoint",
+        "serviço",
+        "servico",
+        "microserviço",
+        "microservico",
+        "rest",
+        "graphql",
+        "worker",
+        "fila",
+        "queue"
+      ],
+      "agents": [
+        "cp-backend-developer"
+      ],
+      "skills": [
+        "backend-engineering",
+        "api-contracts",
+        "qa-testing"
+      ],
+      "worker_capable": true
+    },
+    {
+      "id": "data",
+      "keywords": [
+        "banco de dados",
+        "database",
+        "sql",
+        "schema",
+        "tabela",
+        "migration",
+        "migração",
+        "migracao",
+        "índice",
+        "indice",
+        "query",
+        "persistência",
+        "persistencia",
+        "etl"
+      ],
+      "agents": [
+        "cp-data-engineer"
+      ],
+      "skills": [
+        "data-persistence",
+        "qa-testing"
+      ],
+      "worker_capable": true
+    },
+    {
+      "id": "qa",
+      "keywords": [
+        "qa",
+        "teste",
+        "testes",
+        "test",
+        "tests",
+        "e2e",
+        "regressão",
+        "regressao",
+        "coverage",
+        "cobertura",
+        "caso de teste",
+        "test case",
+        "quality assurance"
+      ],
+      "agents": [
+        "cp-qa-engineer"
+      ],
+      "skills": [
+        "qa-testing"
+      ],
+      "worker_capable": true
+    },
+    {
+      "id": "security",
+      "keywords": [
+        "segurança",
+        "seguranca",
+        "security",
+        "auth",
+        "oauth",
+        "oidc",
+        "jwt",
+        "iam",
+        "vulnerabilidade",
+        "vulnerability",
+        "threat",
+        "ameaça",
+        "ameaca",
+        "secret",
+        "criptografia",
+        "encryption"
+      ],
+      "agents": [
+        "cp-security-engineer"
+      ],
+      "skills": [
+        "application-security",
+        "architecture-design"
+      ],
+      "worker_capable": false
+    },
+    {
+      "id": "devops-platform",
+      "keywords": [
+        "devops",
+        "ci/cd",
+        "cicd",
+        "pipeline",
+        "github actions",
+        "gitlab ci",
+        "docker",
+        "kubernetes",
+        "terraform",
+        "iac",
+        "deploy",
+        "deployment",
+        "helm",
+        "container"
+      ],
+      "agents": [
+        "cp-devops-platform-engineer"
+      ],
+      "skills": [
+        "devops-cicd",
+        "application-security"
+      ],
+      "worker_capable": true
+    },
+    {
+      "id": "sre-observability",
+      "keywords": [
+        "sre",
+        "observabilidade",
+        "observability",
+        "monitoramento",
+        "monitoring",
+        "logging",
+        "logs",
+        "métrica",
+        "metrica",
+        "metrics",
+        "alerta",
+        "alert",
+        "slo",
+        "sli",
+        "incident",
+        "incidente",
+        "tracing"
+      ],
+      "agents": [
+        "cp-sre-observability-engineer"
+      ],
+      "skills": [
+        "sre-observability"
+      ],
+      "worker_capable": true
+    },
+    {
+      "id": "code-review",
+      "keywords": [
+        "code review",
+        "review de código",
+        "review de codigo",
+        "pull request",
+        "pr review",
+        "revisar código",
+        "revisar codigo"
+      ],
+      "agents": [
+        "cp-code-reviewer"
+      ],
+      "skills": [
+        "code-review"
+      ],
+      "worker_capable": false
+    },
+    {
+      "id": "release",
+      "keywords": [
+        "release",
+        "versão",
+        "versao",
+        "versionamento",
+        "semver",
+        "changelog",
+        "rollback",
+        "go-live",
+        "produção",
+        "producao"
+      ],
+      "agents": [
+        "cp-release-manager"
+      ],
+      "skills": [
+        "release-management"
+      ],
+      "worker_capable": true
+    },
+    {
+      "id": "documentation",
+      "keywords": [
+        "documentação",
+        "documentacao",
+        "documentation",
+        "readme",
+        "manual",
+        "guia",
+        "tutorial",
+        "runbook",
+        "apostila"
+      ],
+      "agents": [
+        "cp-technical-writer"
+      ],
+      "skills": [
+        "technical-documentation",
+        "long-document"
+      ],
+      "worker_capable": true
+    },
+    {
+      "id": "debugging",
+      "keywords": [
+        "debug",
+        "debugging",
+        "erro",
+        "error",
+        "bug",
+        "falha",
+        "failure",
+        "stack trace",
+        "traceback",
+        "root cause",
+        "causa raiz",
+        "troubleshooting"
+      ],
+      "agents": [
+        "cp-debugger"
+      ],
+      "skills": [
+        "debugging-triage",
+        "qa-testing"
+      ],
+      "worker_capable": true
+    }
+  ],
+  "factory_gate_rules": {
+    "implementation_roles": [
+      "frontend",
+      "backend",
+      "data",
+      "devops-platform"
+    ],
+    "implementation_gates": [
+      "qa",
+      "code-review"
+    ],
+    "security_trigger_roles": [
+      "security"
+    ],
+    "release_trigger_roles": [
+      "release",
+      "devops-platform"
+    ]
+  }
 }

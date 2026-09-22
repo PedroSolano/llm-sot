@@ -1,71 +1,73 @@
-# Managed Codex environment instructions
+# Managed Codex Software Factory
 
-These instructions originate from the central GitHub Codex Registry.
+These instructions originate from the central GitHub registry and are applied automatically.
 
-## Layer 0 — Git registry bootstrap
+## Automatic Layer 0 bootstrap
 
-At the beginning of each NEW Codex conversation/workspace, before substantive
-work, run `codex-bootstrap` once.
+No manual bootstrap is required during normal use.
 
-`codex-bootstrap` asks the out-of-sandbox client daemon to refresh the GitHub
-registry and apply the latest AGENTS, custom agents, skills, and routing policy.
-If GitHub is unavailable, continue immediately with the last valid cached
-revision. Never block the user's work because Git sync failed.
+The client background daemon synchronizes the Git registry continuously and applies:
+- this AGENTS.md;
+- custom agents;
+- skills;
+- factory role/workflow definitions;
+- routing policy.
 
-The Git registry is independent from the router and remote LLM. Agents and
-skills must remain usable even if all local AI infrastructure is offline.
+The installed CLI/VS Code launch hooks also trigger an immediate best-effort `codex-bootstrap` before launching `codex` or `code`. If GitHub is unavailable, use the last valid local cache and continue. Never block work because Git sync failed.
 
-## Routing
+## Control Plane routing
 
-For each user request after bootstrap:
+For every substantive request, use `codex-route` unless the user explicitly opts out of orchestration.
 
-- If the user explicitly says not to use the remote/local LLM or not to
-  delegate, primary Codex does the complete task.
-- Otherwise call `codex-route` before substantial execution.
+The FINAL route is authoritative:
+- `codex`: Codex executes.
+- `worker`: delegate bounded execution-heavy work with `remote-code-worker`, then review.
+- `hybrid`: Codex owns decisions/contracts/acceptance criteria; delegate the heavy bounded phase; Codex integrates/reviews.
 
-Routes:
+Never replace WORKER/HYBRID with CODEX merely because a local skill or agent appears capable.
 
-- `codex`: primary Codex performs everything.
-- `worker`: delegate bounded execution-heavy work to `remote-code-worker`, then
-  review.
-- `hybrid`: Codex does reasoning/retrieval/architecture, Qwen executes the
-  bounded high-volume portion, then Codex reviews.
+## Software Factory
 
+Treat software work as a selective software factory. Use the relevant disciplines from `factory/roles.json`; do not invoke every role mechanically.
 
-### Route authority
+Typical disciplines include product/requirements, architecture, UX/UI, frontend, backend, data, QA, security, DevOps/platform, SRE/observability, code review, release and documentation.
 
-The final route returned by the Control Plane is authoritative for execution.
-Do not replace `worker` or `hybrid` with `codex` merely because a Codex skill,
-custom agent, or local capability appears suitable. Skills describe HOW to
-execute the selected route; they do not choose a different route.
+For code-changing tasks, QA evidence and code review are normally mandatory. Add security, release and observability gates when the risk/change requires them.
 
-When the final route is `worker` or `hybrid` and `worker_required=true`,
-attempt the bounded worker delegation before doing the token-heavy portion in
-Codex. Codex may take over only after an actual worker/control-plane failure
-covered by the failover rules.
+Use `software-factory` for multi-discipline work. Each handoff must state:
+- input/context;
+- constraints/contracts;
+- expected output;
+- acceptance/verification.
 
-For `hybrid`, Codex must retain the high-value portion (outline, decisions,
-facts, retrieval, acceptance criteria, review) and delegate the identified
-high-volume portion. Do not interpret `hybrid` as permission for Codex to do
-the entire task without attempting delegation.
+## Shared Codex + Qwen context
+
+The same Git registry is used by Codex and the remote Qwen worker.
+
+When delegating, pass the Control Plane recommendations when practical:
+
+```text
+remote-code-worker \
+  --agent cp-backend-developer \
+  --skill backend-engineering \
+  --skill qa-testing \
+  "bounded delegated task..."
+```
+
+If no profile is passed, the worker automatically infers a factory role from `factory/roles.json`. The worker receives the selected agent/skill contracts in its system context.
 
 ## Hard failover
 
-The router and Qwen are optional optimizations.
+The router and worker are optional optimizations.
 
-If the Control Plane/router is unavailable, primary Codex performs the entire
-request. Do NOT locally reproduce a WORKER/HYBRID route and do NOT call Qwen
-behind the router's back.
+If the Control Plane is unavailable, Codex performs the entire request. Do not call Qwen behind the router.
 
-If the router is available but Qwen is unavailable/fails, primary Codex takes
-over the entire remaining request. Do not loop on retries.
+If the Control Plane is available but the worker fails/unavailable, Codex takes over the remaining request without retry loops.
 
 ## Research
 
-For current/web research, Codex performs retrieval and source validation. Qwen
-may synthesize only the bounded material when the router returns `hybrid`.
+Codex performs current/web retrieval and source validation. Qwen may synthesize only bounded supplied material under a HYBRID route.
 
-## Review
+## Final integration
 
-Review important reasoning, diffs, tests, facts, citations/source handling, and
-security-sensitive changes before final delivery.
+Before delivery, verify relevant acceptance criteria, tests, security findings, operational impact and documentation. Report unverified areas explicitly.
