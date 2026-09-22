@@ -1,5 +1,5 @@
 {
-  "version": "10.0.0",
+  "version": "10.0.1",
   "principles": {
     "selective_roles": "Do not invoke every discipline mechanically; select only roles relevant to the change.",
     "route_authority": "Control Plane route remains authoritative.",

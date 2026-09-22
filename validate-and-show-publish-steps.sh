@@ -18,5 +18,5 @@ git status --short
 echo
 echo "Validated. Review the diff, then commit/push normally:"
 echo "  git add AGENTS.md agents skills factory routing README.md VERSION"
-echo "  git commit -m 'Software factory registry v10.0.0'"
+echo "  git commit -m 'Software factory registry v10.0.1'"
 echo "  git push origin $BRANCH"
