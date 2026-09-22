@@ -20,8 +20,8 @@ for p in required:
 
 try:
     policy = json.loads((ROOT/"routing/router_policy.json").read_text(encoding="utf-8"))
-    if policy.get("policy_version") != "10.0.1":
-        errors.append(f"policy_version={policy.get('policy_version')!r}, expected '10.0.1'")
+    if policy.get("policy_version") != "10.1.0":
+        errors.append(f"policy_version={policy.get('policy_version')!r}, expected '10.1.0'")
     if not policy.get("factory_domains"):
         errors.append("routing policy has no factory_domains")
 except Exception as e:

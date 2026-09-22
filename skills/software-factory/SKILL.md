@@ -1,16 +1,12 @@
 ---
 name: software-factory
-description: Coordinate multi-discipline software delivery with explicit handoffs and quality gates.
+description: Coordinate selective software disciplines using small specialist jobs, measurable gates, one worker repair attempt, and Codex integration.
 ---
-The Control Plane route is authoritative.
 
-Operate as a selective software factory, not a ritual checklist. Identify the change type, then select only relevant roles from `factory/roles.json`.
+Use only relevant disciplines. Prefer separate worker jobs for backend+tightly-coupled data, frontend, QA, documentation, and DevOps/IaC when independently testable.
 
-For code-changing work, normally require:
-1. clear acceptance criteria;
-2. implementation owner(s);
-3. QA/regression evidence;
-4. code review;
-5. security/release/observability gates when the change touches those risks.
+Each handoff must contain bounded scope, inputs/contracts, explicit non-goals, expected output/files, and one measurable gate.
 
-For HYBRID, Codex owns decomposition, decisions, cross-role contracts and final integration review. Delegate bounded execution-heavy phases to the worker using the relevant shared agent/skills. Every handoff must state inputs, constraints, expected output and verification.
+Codex runs every gate. A failed worker delivery gets one repair attempt using objective feedback; if repair fails, Codex takes over.
+
+WORKER is reserved for bounded mechanical/execution-only work. Material Codex framing before worker execution plus material Codex validation/review afterward is HYBRID.

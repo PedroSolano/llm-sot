@@ -1,22 +1,12 @@
 ---
 name: orchestration
-description: Route every task through the central Control Plane and execute the selected Codex/Worker/Hybrid path.
+description: Route through the Control Plane and execute CODEX/WORKER/HYBRID with bounded worker jobs, one repair attempt, and failover.
 ---
 
-The FINAL Control Plane route is authoritative.
+The FINAL route is authoritative.
 
-Before substantial execution, obtain the route. Use `recommended_factory_roles`, `recommended_agents`, `recommended_skills` and `quality_gates` as execution context.
+For `CODEX`, execute directly. For `WORKER`, delegate bounded mechanical/execution-heavy work. For `HYBRID`, Codex owns framing/contracts/acceptance criteria and final integration/review; follow `worker_plan` sequentially.
 
-When delegating to Qwen, pass the relevant context:
+After every worker job run the gate. First gate failure: exactly one `remote-code-worker --repair-of JOB_ID --feedback ...`. Second failure: Codex takeover. Never retry the worker a second time for the same root job.
 
-```text
-remote-code-worker --agent <agent> --skill <skill> ...
-```
-
-If omitted, the worker auto-selects a shared factory profile from the current Git registry.
-
-- `worker`: delegate bounded execution-heavy work, then Codex reviews.
-- `hybrid`: Codex owns reasoning/contracts/acceptance criteria; worker executes the bounded heavy phase; Codex integrates and reviews.
-- `codex`: Codex performs the task directly.
-
-Skills/agents never override the route. If the worker actually fails, Codex takes over the remaining work.
+Emit `codex-factory-event` with the final worker outcome. Skills/agents never change the final route.

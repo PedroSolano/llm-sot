@@ -1,73 +1,64 @@
-# Managed Codex Software Factory
+# Managed Codex Software Factory v10.1.0
 
-These instructions originate from the central GitHub registry and are applied automatically.
+These instructions originate from the central Git registry and are applied automatically.
 
-## Automatic Layer 0 bootstrap
+## Automatic bootstrap
+Normal operation requires no manual bootstrap. Git failure must not block work; use the last valid local registry cache.
 
-No manual bootstrap is required during normal use.
+## Control Plane route authority
+For every substantive request, consult `codex-route` unless the user explicitly opts out. The FINAL route is authoritative.
 
-The client background daemon synchronizes the Git registry continuously and applies:
-- this AGENTS.md;
-- custom agents;
-- skills;
-- factory role/workflow definitions;
-- routing policy.
+### Route semantics
+- `CODEX`: high-value reasoning/judgment is the primary work and no substantial worker execution is required.
+- `WORKER`: bounded mechanical/repetitive/execution-heavy work. Codex may perform lightweight verification, but must not own substantial framing before the worker and substantial review/repair after it.
+- `HYBRID`: Codex owns architecture/contracts/acceptance criteria or other material framing, the worker executes a bounded heavy phase, and Codex performs material validation/review/integration afterward.
 
-The installed CLI/VS Code launch hooks also trigger an immediate best-effort `codex-bootstrap` before launching `codex` or `code`. If GitHub is unavailable, use the last valid local cache and continue. Never block work because Git sync failed.
+If Codex must define a contract/criteria before delegation and test/review the worker result afterward, the route is HYBRID even if Qwen performs most edits. Skills/agents never override the route.
 
-## Control Plane routing
+## Selective Software Factory
+Use only relevant disciplines. For code-changing work, QA evidence and code review are normal gates. Add security/release/SRE when relevant.
 
-For every substantive request, use `codex-route` unless the user explicitly opts out of orchestration.
+Use Control Plane fields: `recommended_factory_roles`, `recommended_agents`, `recommended_skills`, `quality_gates`, `worker_plan`, and `worker_execution`.
 
-The FINAL route is authoritative:
-- `codex`: Codex executes.
-- `worker`: delegate bounded execution-heavy work with `remote-code-worker`, then review.
-- `hybrid`: Codex owns decisions/contracts/acceptance criteria; delegate the heavy bounded phase; Codex integrates/reviews.
+## HYBRID / worker decomposition
+Do not send one oversized worker job when `worker_plan` contains multiple phases. For each phase:
+1. Codex states bounded scope, contracts, non-goals and measurable gate.
+2. Delegate that phase with `remote-code-worker`.
+3. Run the gate.
+4. If it passes, continue.
+5. If it fails, allow exactly one Qwen repair: `remote-code-worker --repair-of <JOB_ID> --feedback "<objective failures>"`.
+6. Rerun the gate.
+7. If repair still fails, stop worker retries and Codex takes over.
 
-Never replace WORKER/HYBRID with CODEX merely because a local skill or agent appears capable.
+Never create an unbounded worker retry loop.
 
-## Software Factory
+## Worker repair budget
+The client enforces one repair attempt per root worker job. Repair feedback must be objective: failing tests, exit code, compiler/linter errors, violated contract items, concise file/line findings. Do not broaden scope during repair.
 
-Treat software work as a selective software factory. Use the relevant disciplines from `factory/roles.json`; do not invoke every role mechanically.
+## Factory telemetry
+After the final gate for a delegated unit, emit one prompt-free metadata event:
 
-Typical disciplines include product/requirements, architecture, UX/UI, frontend, backend, data, QA, security, DevOps/platform, SRE/observability, code review, release and documentation.
-
-For code-changing tasks, QA evidence and code review are normally mandatory. Add security, release and observability gates when the risk/change requires them.
-
-Use `software-factory` for multi-discipline work. Each handoff must state:
-- input/context;
-- constraints/contracts;
-- expected output;
-- acceptance/verification.
-
-## Shared Codex + Qwen context
-
-The same Git registry is used by Codex and the remote Qwen worker.
-
-When delegating, pass the Control Plane recommendations when practical:
-
-```text
-remote-code-worker \
-  --agent cp-backend-developer \
-  --skill backend-engineering \
-  --skill qa-testing \
-  "bounded delegated task..."
+```bash
+codex-factory-event --outcome accepted_first_pass --worker-job JOB_ID --role backend --skill backend-engineering --gate qa --gate code-review
 ```
 
-If no profile is passed, the worker automatically infers a factory role from `factory/roles.json`. The worker receives the selected agent/skill contracts in its system context.
+```bash
+codex-factory-event --outcome accepted_after_repair --worker-job JOB_ID --repair-job REPAIR_JOB_ID --role backend --gate qa
+```
+
+```bash
+codex-factory-event --outcome codex_takeover --worker-job JOB_ID --role backend --gate qa
+```
+
+Include `--route-job` when available and roles/skills actually executed by Codex.
 
 ## Hard failover
-
-The router and worker are optional optimizations.
-
-If the Control Plane is unavailable, Codex performs the entire request. Do not call Qwen behind the router.
-
-If the Control Plane is available but the worker fails/unavailable, Codex takes over the remaining request without retry loops.
+- Control Plane unavailable: Codex performs the request; do not call Qwen behind the router.
+- Worker unavailable/technical failure: Codex takes over.
+- Quality gate failure: one repair attempt, then Codex takeover.
 
 ## Research
-
-Codex performs current/web retrieval and source validation. Qwen may synthesize only bounded supplied material under a HYBRID route.
+Codex performs current/web retrieval and source validation. Qwen may synthesize bounded supplied/local material under the selected route.
 
 ## Final integration
-
-Before delivery, verify relevant acceptance criteria, tests, security findings, operational impact and documentation. Report unverified areas explicitly.
+Report final route, actual delegation(s), repair attempt if any, takeover if any, gates/evidence, and residual unverified areas.

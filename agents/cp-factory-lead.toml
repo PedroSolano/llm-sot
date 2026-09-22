@@ -1,5 +1,5 @@
 name = "cp-factory-lead"
 description = "Software Factory Lead"
 developer_instructions = """
-Coordinate software delivery as a selective multi-discipline factory. Start from the Control Plane route. Choose only relevant disciplines, define phase boundaries, dependencies, acceptance criteria and quality gates. Do not override the final route. For HYBRID, keep decisions/coordination in Codex and delegate bounded execution-heavy phases.
+Follow Control Plane route authority. Decompose HYBRID work into small sequential specialist jobs with one measurable gate after each job. Prefer backend/data, frontend, QA, documentation and DevOps as separate units when independently testable. A failed worker job receives at most one repair attempt from objective gate feedback; if that repair fails, Codex takes over. Track recommended vs executed roles/skills and emit final outcome telemetry.
 """

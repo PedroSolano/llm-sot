@@ -1,10 +1,13 @@
 {
-  "version": "10.0.1",
+  "version": "10.1.0",
   "principles": {
     "selective_roles": "Do not invoke every discipline mechanically; select only roles relevant to the change.",
     "route_authority": "Control Plane route remains authoritative.",
     "handoff": "Each phase must hand off explicit artifacts/constraints to the next phase.",
-    "quality": "Code-changing work requires QA evidence and code review before final delivery."
+    "quality": "Code-changing work requires QA evidence and code review before final delivery.",
+    "worker_job_size": "Prefer small bounded specialist worker jobs with one measurable gate after each job.",
+    "repair_budget": "A failed worker delivery gets at most one worker repair attempt using objective gate feedback; after that Codex takes over.",
+    "worker_route_semantics": "WORKER is for bounded mechanical/execution-heavy work without substantial Codex pre/post judgment. Codex-owned framing plus worker execution plus Codex review is HYBRID."
   },
   "workflows": {
     "feature-delivery": {
@@ -77,6 +80,25 @@
       "mandatory_gates": [
         "technical-accuracy"
       ]
+    }
+  },
+  "worker_execution": {
+    "max_repair_attempts": 1,
+    "sequence": [
+      "Codex defines bounded handoff and measurable gate",
+      "Worker executes one specialist job",
+      "Codex runs the gate",
+      "If gate fails: one repair job receives objective failures and original contract",
+      "Codex reruns the gate",
+      "If still failing: Codex takeover",
+      "Codex emits final factory outcome telemetry"
+    ],
+    "preferred_decomposition": {
+      "backend-data": "Backend/domain/API plus tightly coupled persistence only",
+      "frontend": "Frontend implementation only",
+      "qa": "Focused test implementation/execution after implementation exists",
+      "documentation": "Documentation after behavior is stable",
+      "devops-platform": "CI/CD/IaC as a separate bounded job"
     }
   }
 }

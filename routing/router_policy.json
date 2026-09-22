@@ -149,7 +149,7 @@
     "detailed",
     "well-structured"
   ],
-  "policy_version": "10.0.1",
+  "policy_version": "10.1.0",
   "factory_domains": [
     {
       "id": "factory-lead",
@@ -538,5 +538,84 @@
       "release",
       "devops-platform"
     ]
+  },
+  "codex_pre_worker_terms": [
+    "codex deve definir",
+    "codex deve assumir",
+    "codex define",
+    "codex deve criar",
+    "codex deve estabelecer",
+    "antes da delegação",
+    "antes da delegacao",
+    "antes de delegar",
+    "before delegation",
+    "before delegating",
+    "defina previamente o contrato",
+    "definir previamente o contrato",
+    "defina os critérios de aceite",
+    "defina os criterios de aceite",
+    "definir os critérios de aceite",
+    "definir os criterios de aceite",
+    "contrato http"
+  ],
+  "codex_post_worker_terms": [
+    "codex deve revisar",
+    "codex revisa",
+    "revisão final",
+    "revisao final",
+    "code review",
+    "review final",
+    "validar a entrega do worker",
+    "valide a entrega do worker",
+    "após o worker",
+    "apos o worker",
+    "depois do worker",
+    "after the worker",
+    "execute os testes",
+    "executar os testes",
+    "faça code review",
+    "faca code review"
+  ],
+  "delegation_terms": [
+    "delegue",
+    "delegar",
+    "delegação",
+    "delegacao",
+    "worker",
+    "qwen",
+    "remote-code-worker",
+    "llm local",
+    "implementação pesada",
+    "implementacao pesada"
+  ],
+  "mechanical_worker_terms": [
+    "substitua exatamente",
+    "replace exactly",
+    "renomeie",
+    "rename",
+    "formate",
+    "format",
+    "padronize",
+    "normalize",
+    "mecânico",
+    "mecanico",
+    "mechanical",
+    "repetitivo",
+    "repetitive",
+    "aplique a mesma alteração",
+    "aplique a mesma alteracao",
+    "apply the same change",
+    "em muitos arquivos",
+    "across many files",
+    "40 arquivos",
+    "100 arquivos",
+    "200 arquivos"
+  ],
+  "worker_execution_policy": {
+    "repair_budget": 1,
+    "sequential_jobs": true,
+    "max_recommended_worker_jobs": 4,
+    "worker_only_requires_mechanical_intent": true,
+    "codex_ownership_plus_worker_execution_is_hybrid": true
   }
 }
