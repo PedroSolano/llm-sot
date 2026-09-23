@@ -1,21 +1,24 @@
 ---
 name: orchestration
-description: Route through the Control Plane and execute CODEX/WORKER/HYBRID with specialist jobs, evidence gates, one gate-directed repair, and failover.
+description: Execute Control Plane routes with implementation integrity, mandatory independent QA, one specialist repair and failover.
 ---
 
 The FINAL route is authoritative.
 
-For HYBRID, follow `worker_plan` sequentially. Each plan item is a separate specialist job unless Codex has objective evidence that two listed units are inseparable.
+Follow `worker_plan` sequentially. For each job pass its profile, agent and skills to `remote-code-worker`.
 
-Pass the plan item's `profile`, `agent` and `skills` to `remote-code-worker`. Do not silently merge QA or documentation back into an implementation job.
+If a plan item contains `worker_args`, pass those arguments too. In particular:
+- `--qa-mode transient` means QA-only tests are temporary;
+- `--qa-mode persistent` means tests are final project artifacts.
 
-After every worker job, inspect its returned evidence and run `gate_after`.
+Do not invent extra specialist jobs beyond the plan, but never skip the QA job returned for a code change.
 
-On first gate failure, use exactly one repair:
+After each worker job, inspect objective evidence and run `gate_after`.
+
+On first failure:
 `remote-code-worker --repair-of JOB_ID --repair-gate GATE --feedback "<objective failures>"`
 
-If the Control Plane provided `repair_profile`, pass it as `--repair-profile`. The client also infers common specialists from gate/feedback as a fallback.
+Use the plan's repair profile when supplied. Second failure means Codex takeover.
 
-Second failure for the same root job means Codex takeover. Never create an unbounded retry loop.
-
-Emit `codex-factory-event` with the final worker outcome.
+A successful implementation with zero-byte changed files is impossible: the implementation worker must fail evidence first.
+QA succeeds only after a real test command passes and at least one test actually executes.

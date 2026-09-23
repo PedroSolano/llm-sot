@@ -1,5 +1,5 @@
 {
-  "version": "10.3.0",
+  "version": "10.5.0",
   "roles": [
     {
       "id": "factory-lead",
@@ -146,10 +146,11 @@
         "accessibility",
         "frontend tests"
       ],
-      "handoff": "Implement only bounded frontend behavior against approved contracts. Do not own the broad QA suite or documentation phase.",
+      "handoff": "Implement only bounded frontend behavior against approved contracts. Do not own the broad QA suite or documentation phase. Every changed implementation artifact must be non-empty; zero-byte output is a hard failure.",
       "repair_profile": "frontend",
       "evidence_requirements": [
-        "workspace_changes"
+        "workspace_changes",
+        "nonempty_workspace_changes"
       ]
     },
     {
@@ -182,10 +183,11 @@
         "validation",
         "backend tests"
       ],
-      "handoff": "Implement only bounded backend/domain/API behavior against approved contracts. Do not own the broad QA suite or documentation phase. Return implementation evidence.",
+      "handoff": "Implement only bounded backend/domain/API behavior against approved contracts. Do not own the broad QA suite or documentation phase. Return implementation evidence. Every changed implementation artifact must be non-empty; zero-byte output is a hard failure.",
       "repair_profile": "backend",
       "evidence_requirements": [
-        "workspace_changes"
+        "workspace_changes",
+        "nonempty_workspace_changes"
       ]
     },
     {
@@ -218,10 +220,11 @@
         "integrity",
         "performance"
       ],
-      "handoff": "Implement only bounded persistence/schema/query work. Do not own the broad QA suite. Return changed persistence artifacts and focused validation evidence.",
+      "handoff": "Implement only bounded persistence/schema/query work. Do not own the broad QA suite. Return changed persistence artifacts and focused validation evidence. Every changed implementation artifact must be non-empty; zero-byte output is a hard failure.",
       "repair_profile": "data",
       "evidence_requirements": [
-        "workspace_changes"
+        "workspace_changes",
+        "nonempty_workspace_changes"
       ]
     },
     {
@@ -253,11 +256,13 @@
         "regression",
         "evidence"
       ],
-      "handoff": "Own the QA phase after implementation exists. Create/update test artifacts, execute the relevant suite, and return concrete command/exit-code evidence. Never claim completion without test files and an executed passing test command when automation is feasible.",
+      "handoff": "Own independent QA after implementation exists, whether or not the user explicitly requested tests. Create or update meaningful automated tests, execute them, and return concrete command/exit-code evidence. When qa_mode=transient, write QA-only tests under the assigned .codex-factory-qa/<job-id>/ directory; do not rename production paths merely to make imports easier. For non-importable paths such as folders containing hyphens, load by file path/importlib or exercise the program as a subprocess. Never claim completion with zero discovered/executed tests.",
       "repair_profile": "qa",
       "evidence_requirements": [
         "test_files_present",
-        "test_command_passed"
+        "nonempty_test_files",
+        "test_command_passed",
+        "tests_executed"
       ]
     },
     {
@@ -327,10 +332,11 @@
         "deployment safety",
         "supply chain"
       ],
-      "handoff": "Provide reproducible pipeline/IaC changes, validation and rollback path.",
+      "handoff": "Provide reproducible pipeline/IaC changes, validation and rollback path. Every changed implementation artifact must be non-empty; zero-byte output is a hard failure.",
       "repair_profile": "devops-platform",
       "evidence_requirements": [
-        "workspace_changes"
+        "workspace_changes",
+        "nonempty_workspace_changes"
       ]
     },
     {

@@ -1,11 +1,11 @@
 {
-  "version": "10.3.0",
+  "version": "10.5.0",
   "principles": {
     "selective_roles": "Do not invoke every discipline mechanically; select only roles relevant to the change.",
     "route_authority": "Control Plane route remains authoritative.",
     "handoff": "Each phase must hand off explicit artifacts/constraints to the next phase.",
-    "quality": "Worker completion requires objective evidence defined by the selected specialist profile. QA is not complete without test artifacts plus an executed passing test command.",
-    "worker_job_size": "Use one specialist responsibility per worker job. Backend, data, frontend, QA, documentation and DevOps are separate jobs when independently verifiable.",
+    "quality": "Every code-changing delivery receives independent QA, even when tests were not requested. Implementation artifacts must be non-empty. QA requires non-empty test artifacts, a passing test command and proof that at least one test actually executed.",
+    "worker_job_size": "Fast path reduces the number of implementation specialists, never validation rigor. A micro code task uses one implementation job plus one independent QA job.",
     "repair_budget": "A failed delegated unit gets at most one specialist repair attempt. The repair owner is chosen from the failed gate/profile rather than blindly reusing the original worker profile.",
     "worker_route_semantics": "WORKER is for bounded mechanical/execution-heavy work without substantial Codex pre/post judgment. Codex-owned framing plus worker execution plus Codex review is HYBRID."
   },
@@ -104,21 +104,55 @@
     },
     "required_evidence_examples": {
       "backend": [
-        "workspace_changes"
+        "workspace_changes",
+        "nonempty_workspace_changes"
       ],
       "data": [
-        "workspace_changes"
+        "workspace_changes",
+        "nonempty_workspace_changes"
       ],
       "frontend": [
-        "workspace_changes"
+        "workspace_changes",
+        "nonempty_workspace_changes"
       ],
       "qa": [
         "test_files_present",
-        "test_command_passed"
+        "nonempty_test_files",
+        "test_command_passed",
+        "tests_executed"
       ],
       "documentation": [
         "documentation_files_changed"
       ]
     }
+  },
+  "micro_task_fast_path": {
+    "goal": "Reduce ceremony for tiny changes without reducing verification.",
+    "eligibility": [
+      "small explicit scope",
+      "normally four or fewer explicitly named files",
+      "no substantial documentation deliverable",
+      "no persistence/API/security/deployment or similar complexity trigger"
+    ],
+    "execution": [
+      "Codex defines concise acceptance criteria",
+      "one bounded implementation worker creates all requested tiny artifacts, including trivial README",
+      "implementation gate rejects any zero-byte changed artifact",
+      "one independent QA worker always validates code behavior",
+      "if tests were not requested, QA uses a transient .codex-factory-qa/<job-id>/ suite",
+      "QA must execute at least one real test and pass",
+      "transient QA artifacts are removed automatically after evidence is captured",
+      "Codex runs any additional compile/run/content checks requested by the user",
+      "one repair per failed delegated unit, then Codex takeover"
+    ],
+    "disqualifiers_for_single_implementation_job": [
+      "database/persistence",
+      "API or server work",
+      "security/authentication",
+      "deployment/IaC",
+      "substantial documentation",
+      "larger or ambiguous scope"
+    ],
+    "important": "Automated QA remains mandatory for code changes regardless of whether the user asked for tests."
   }
 }

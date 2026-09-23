@@ -1,66 +1,64 @@
-# Managed Codex Software Factory v10.3.0
+# Managed Codex Software Factory v10.5.0
 
-These instructions originate from the central Git registry and are applied automatically.
+These instructions come from the central Git Source of Truth.
 
-## Automatic bootstrap
-Normal operation requires no manual bootstrap. Git failure must not block work; use the last valid local registry cache.
+## Route authority
+For every substantive request, consult `codex-route` unless the user explicitly opts out.
+The FINAL Control Plane route is authoritative. Users do not need to mention routing or delegation.
 
-## Control Plane route authority
-For every substantive request, consult `codex-route` unless the user explicitly opts out. The FINAL route is authoritative. The user does not need to mention routing, delegation, agents, skills or the Software Factory.
+## Quality invariant
+Reducing orchestration ceremony must never reduce validation rigor.
 
-### Route semantics
-- `CODEX`: high-value reasoning/judgment is the primary work and no substantial worker execution is required.
-- `WORKER`: bounded mechanical/repetitive/execution-heavy work with no substantial Codex framing+review sandwich.
-- `HYBRID`: Codex materially frames contracts/acceptance criteria, one or more workers execute bounded specialist units, and Codex validates/reviews/integrates.
+For every code-changing delivery:
+1. implementation output must pass structural integrity checks;
+2. every changed implementation artifact must be non-empty;
+3. independent QA runs after implementation, even if the user did not request tests;
+4. QA must create/find non-empty tests, execute a relevant test command successfully, and prove at least one test ran;
+5. a worker statement that something passed is not evidence.
 
-## Specialist Software Factory
-Use `worker_plan` as the default decomposition. One worker job should have one primary specialist responsibility.
+## Micro-task fast path
+When `task_shape.micro_task=true`, use exactly the worker plan returned by the Control Plane.
 
-Do not bundle independently verifiable phases merely to save calls:
-- backend implementation;
-- data/persistence;
-- frontend;
-- DevOps/IaC;
-- QA;
-- documentation.
+Typical micro code flow:
+- one implementation job;
+- one independent QA job;
+- Codex integration/requested gates.
 
-QA and documentation happen after the implementation they verify exists.
+Do not split tiny README/documentation into a separate writer job.
+Do not omit QA.
 
-Each handoff states bounded scope, non-goals, expected artifacts, required evidence and one gate.
+When tests are not part of the user's requested final artifacts, the QA plan has `qa_mode=transient`.
+Pass the plan's worker args to `remote-code-worker`. Transient tests live only under the assigned
+`.codex-factory-qa/<job-id>/` directory and are removed automatically after successful evidence capture.
 
-## Mandatory worker evidence
-A worker saying "done" is not evidence. Inspect the `evidence` returned by the worker.
+When tests are explicitly requested as deliverables, `qa_mode=persistent`; they remain in the workspace.
 
-For QA on code-changing work, completion requires both:
-- test files present;
-- a relevant test command executed successfully.
+The word `test` or `smoke` in a project/folder name is not itself a request for persistent test artifacts.
 
-If mandatory evidence is missing, treat the worker job as failed even if its prose claims success.
+## Specialist factory
+For larger work, decompose independently verifiable implementation responsibilities as appropriate
+(backend, data, frontend, DevOps) and run QA after the implementation dependencies complete.
 
-## One gate-directed repair
-After a failed gate, allow exactly one repair for that root worker job.
+## Evidence
+Implementation profiles normally require:
+- `workspace_changes`
+- `nonempty_workspace_changes`
 
-Use:
-```bash
-remote-code-worker --repair-of JOB_ID --repair-gate GATE --feedback "<objective failures>"
-```
+QA requires:
+- `test_files_present`
+- `nonempty_test_files`
+- `test_command_passed`
+- `tests_executed`
 
-When `worker_plan` supplies `repair_profile`, also pass:
-```bash
---repair-profile PROFILE
-```
+## Repair
+Each root delegated unit has one repair attempt. Repair owner follows the failed gate.
+Second failure means Codex takeover.
 
-Repairs are owned by the specialist responsible for the failed gate. Missing/failing broad tests -> QA. Documentation mismatch -> documentation. Persistence failure -> data. Frontend-specific failure -> frontend. Implementation-smoke failure -> original implementation owner.
-
-If the repair fails, stop worker retries and Codex takes over.
-
-## Research
-Codex remains responsible for source quality and final synthesis. A worker may perform bounded web research only when the Windows gateway exposes web tools, the delegated task benefits from current/external information, and the user has not prohibited internet use. Current facts used in the final answer still require Codex validation when relevant.
-
-## Hard failover
-- Control Plane unavailable: Codex performs the request.
-- Worker unavailable/technical failure: Codex takes over.
-- Quality/evidence gate failure: one specialist repair, then Codex takeover.
+## Failover
+- Control Plane unavailable -> Codex continues.
+- Worker unavailable -> Codex continues.
+- Git unavailable -> last valid registry cache continues.
+- Worker/evidence failure -> one repair, then Codex takeover.
 
 ## Final integration
-Report the final route, actual specialist delegations, repair/takeover if any, gates/evidence and residual unverified areas. Keep this concise unless the user asks for implementation detail.
+Keep internal orchestration concise in the user-facing result unless it materially matters.

@@ -1,26 +1,32 @@
 ---
 name: software-factory
-description: Coordinate selective software disciplines using specialist jobs, objective evidence, one gate-directed repair attempt, and Codex integration.
+description: Coordinate implementation and independent QA with mandatory evidence, transient QA when tests are not deliverables, one repair, and Codex integration.
 ---
 
-Use only relevant disciplines. Split independently verifiable responsibilities into separate worker jobs. In particular, do not bundle backend/data/frontend implementation with broad QA or documentation merely to reduce the number of calls.
+Use the Control Plane worker plan exactly.
 
-Each handoff must contain:
-- one specialist responsibility;
-- bounded scope and explicit non-goals;
-- inputs/contracts;
-- expected files/artifacts;
-- required evidence;
-- one measurable gate.
+For every code-changing task, independent QA is mandatory even when the prompt does not ask for tests.
 
-Worker completion is not acceptance. Codex runs the gate.
+Micro-task fast path means:
+- one bounded implementation job;
+- one independent QA job;
+- Codex integration and any extra checks explicitly requested by the user.
 
-For QA on code-changing work, required worker evidence is normally:
-- test files exist;
-- a relevant test command actually ran;
-- the command passed;
-- the worker reports what ran.
+It does NOT mean weaker testing.
 
-A first gate failure gets exactly one specialist repair. Route the repair to the role responsible for the failed gate rather than automatically reusing the original implementation profile. After a failed repair, Codex takes over.
+Implementation acceptance requires real workspace changes and no zero-byte changed artifacts.
 
-WORKER remains bounded mechanical/execution work. Material Codex framing plus worker execution plus material Codex validation/review is HYBRID.
+QA acceptance requires:
+- non-empty test files;
+- a relevant passing test command;
+- proof that at least one test executed.
+
+If the plan says `qa_mode=transient`, pass `--qa-mode transient`.
+The worker will use `.codex-factory-qa/<job-id>/` and remove that QA-only directory after successful evidence capture.
+
+If the plan says `qa_mode=persistent`, pass `--qa-mode persistent`; project tests are deliverables and remain.
+
+For paths that are not valid Python package names (for example folders containing `-`), QA must not rename production code.
+Use importlib file loading or subprocess execution.
+
+One failed delegated unit gets one specialist repair; second failure means Codex takeover.

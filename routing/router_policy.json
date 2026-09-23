@@ -149,7 +149,7 @@
     "detailed",
     "well-structured"
   ],
-  "policy_version": "10.3.0",
+  "policy_version": "10.5.0",
   "factory_domains": [
     {
       "id": "factory-lead",
@@ -614,12 +614,18 @@
   "worker_execution_policy": {
     "repair_budget": 1,
     "sequential_jobs": true,
-    "max_recommended_worker_jobs": 6,
+    "max_recommended_worker_jobs": 7,
     "worker_only_requires_mechanical_intent": true,
     "codex_ownership_plus_worker_execution_is_hybrid": true,
     "specialist_jobs": true,
     "gate_specialist_repair": true,
-    "mandatory_worker_evidence": true
+    "mandatory_worker_evidence": true,
+    "micro_task_fast_path": true,
+    "micro_task_single_worker_job": false,
+    "qa_for_all_code_changes": true,
+    "implementation_nonempty_evidence": true,
+    "transient_qa_for_unrequested_tests": true,
+    "micro_task_implementation_plus_qa": true
   },
   "gate_repair_profiles": {
     "implementation-smoke": "backend",
@@ -631,5 +637,84 @@
     "technical-accuracy-review": "documentation",
     "build-or-iac-validate": "devops-platform",
     "release-readiness": "release"
+  },
+  "micro_task_policy": {
+    "enabled": true,
+    "max_prompt_words": 140,
+    "max_explicit_files": 4,
+    "small_scope_terms": [
+      "somente",
+      "apenas",
+      "simples",
+      "mínimo",
+      "minimo",
+      "mínima",
+      "minima",
+      "pequeno",
+      "pequena",
+      "rápido",
+      "rapido",
+      "smoke",
+      "only",
+      "simple",
+      "minimal",
+      "small",
+      "quick"
+    ],
+    "automated_test_terms": [
+      "unittest",
+      "pytest",
+      "testes automatizados",
+      "teste automatizado",
+      "crie testes",
+      "criar testes",
+      "escreva testes",
+      "suite de testes",
+      "suíte de testes",
+      "test suite",
+      "automated tests",
+      "tests/",
+      "test_"
+    ],
+    "substantial_documentation_terms": [
+      "architecture.md",
+      "security-review.md",
+      "runbook",
+      "manual completo",
+      "guia completo",
+      "documentação detalhada",
+      "documentacao detalhada",
+      "technical guide",
+      "architecture document",
+      "security review"
+    ],
+    "complexity_terms": [
+      "sqlite",
+      "database",
+      "banco de dados",
+      "api http",
+      "endpoint",
+      "endpoints",
+      "servidor http",
+      "http server",
+      "frontend",
+      "docker",
+      "terraform",
+      "kubernetes",
+      "autenticação",
+      "autenticacao",
+      "authentication",
+      "oauth",
+      "jwt",
+      "migration",
+      "migração",
+      "migracao",
+      "concorrência",
+      "concorrencia"
+    ],
+    "bundle_trivial_documentation": true,
+    "codex_runs_requested_gates": true,
+    "specialist_qa_only_when_explicit_or_non_micro": true,
+    "specialist_qa_always_for_code_changes": true
   }
 }
