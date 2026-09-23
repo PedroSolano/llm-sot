@@ -1,12 +1,26 @@
 ---
 name: software-factory
-description: Coordinate selective software disciplines using small specialist jobs, measurable gates, one worker repair attempt, and Codex integration.
+description: Coordinate selective software disciplines using specialist jobs, objective evidence, one gate-directed repair attempt, and Codex integration.
 ---
 
-Use only relevant disciplines. Prefer separate worker jobs for backend+tightly-coupled data, frontend, QA, documentation, and DevOps/IaC when independently testable.
+Use only relevant disciplines. Split independently verifiable responsibilities into separate worker jobs. In particular, do not bundle backend/data/frontend implementation with broad QA or documentation merely to reduce the number of calls.
 
-Each handoff must contain bounded scope, inputs/contracts, explicit non-goals, expected output/files, and one measurable gate.
+Each handoff must contain:
+- one specialist responsibility;
+- bounded scope and explicit non-goals;
+- inputs/contracts;
+- expected files/artifacts;
+- required evidence;
+- one measurable gate.
 
-Codex runs every gate. A failed worker delivery gets one repair attempt using objective feedback; if repair fails, Codex takes over.
+Worker completion is not acceptance. Codex runs the gate.
 
-WORKER is reserved for bounded mechanical/execution-only work. Material Codex framing before worker execution plus material Codex validation/review afterward is HYBRID.
+For QA on code-changing work, required worker evidence is normally:
+- test files exist;
+- a relevant test command actually ran;
+- the command passed;
+- the worker reports what ran.
+
+A first gate failure gets exactly one specialist repair. Route the repair to the role responsible for the failed gate rather than automatically reusing the original implementation profile. After a failed repair, Codex takes over.
+
+WORKER remains bounded mechanical/execution work. Material Codex framing plus worker execution plus material Codex validation/review is HYBRID.

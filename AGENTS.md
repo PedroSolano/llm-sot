@@ -1,4 +1,4 @@
-# Managed Codex Software Factory v10.1.0
+# Managed Codex Software Factory v10.3.0
 
 These instructions originate from the central Git registry and are applied automatically.
 
@@ -6,59 +6,61 @@ These instructions originate from the central Git registry and are applied autom
 Normal operation requires no manual bootstrap. Git failure must not block work; use the last valid local registry cache.
 
 ## Control Plane route authority
-For every substantive request, consult `codex-route` unless the user explicitly opts out. The FINAL route is authoritative.
+For every substantive request, consult `codex-route` unless the user explicitly opts out. The FINAL route is authoritative. The user does not need to mention routing, delegation, agents, skills or the Software Factory.
 
 ### Route semantics
 - `CODEX`: high-value reasoning/judgment is the primary work and no substantial worker execution is required.
-- `WORKER`: bounded mechanical/repetitive/execution-heavy work. Codex may perform lightweight verification, but must not own substantial framing before the worker and substantial review/repair after it.
-- `HYBRID`: Codex owns architecture/contracts/acceptance criteria or other material framing, the worker executes a bounded heavy phase, and Codex performs material validation/review/integration afterward.
+- `WORKER`: bounded mechanical/repetitive/execution-heavy work with no substantial Codex framing+review sandwich.
+- `HYBRID`: Codex materially frames contracts/acceptance criteria, one or more workers execute bounded specialist units, and Codex validates/reviews/integrates.
 
-If Codex must define a contract/criteria before delegation and test/review the worker result afterward, the route is HYBRID even if Qwen performs most edits. Skills/agents never override the route.
+## Specialist Software Factory
+Use `worker_plan` as the default decomposition. One worker job should have one primary specialist responsibility.
 
-## Selective Software Factory
-Use only relevant disciplines. For code-changing work, QA evidence and code review are normal gates. Add security/release/SRE when relevant.
+Do not bundle independently verifiable phases merely to save calls:
+- backend implementation;
+- data/persistence;
+- frontend;
+- DevOps/IaC;
+- QA;
+- documentation.
 
-Use Control Plane fields: `recommended_factory_roles`, `recommended_agents`, `recommended_skills`, `quality_gates`, `worker_plan`, and `worker_execution`.
+QA and documentation happen after the implementation they verify exists.
 
-## HYBRID / worker decomposition
-Do not send one oversized worker job when `worker_plan` contains multiple phases. For each phase:
-1. Codex states bounded scope, contracts, non-goals and measurable gate.
-2. Delegate that phase with `remote-code-worker`.
-3. Run the gate.
-4. If it passes, continue.
-5. If it fails, allow exactly one Qwen repair: `remote-code-worker --repair-of <JOB_ID> --feedback "<objective failures>"`.
-6. Rerun the gate.
-7. If repair still fails, stop worker retries and Codex takes over.
+Each handoff states bounded scope, non-goals, expected artifacts, required evidence and one gate.
 
-Never create an unbounded worker retry loop.
+## Mandatory worker evidence
+A worker saying "done" is not evidence. Inspect the `evidence` returned by the worker.
 
-## Worker repair budget
-The client enforces one repair attempt per root worker job. Repair feedback must be objective: failing tests, exit code, compiler/linter errors, violated contract items, concise file/line findings. Do not broaden scope during repair.
+For QA on code-changing work, completion requires both:
+- test files present;
+- a relevant test command executed successfully.
 
-## Factory telemetry
-After the final gate for a delegated unit, emit one prompt-free metadata event:
+If mandatory evidence is missing, treat the worker job as failed even if its prose claims success.
 
+## One gate-directed repair
+After a failed gate, allow exactly one repair for that root worker job.
+
+Use:
 ```bash
-codex-factory-event --outcome accepted_first_pass --worker-job JOB_ID --role backend --skill backend-engineering --gate qa --gate code-review
+remote-code-worker --repair-of JOB_ID --repair-gate GATE --feedback "<objective failures>"
 ```
 
+When `worker_plan` supplies `repair_profile`, also pass:
 ```bash
-codex-factory-event --outcome accepted_after_repair --worker-job JOB_ID --repair-job REPAIR_JOB_ID --role backend --gate qa
+--repair-profile PROFILE
 ```
 
-```bash
-codex-factory-event --outcome codex_takeover --worker-job JOB_ID --role backend --gate qa
-```
+Repairs are owned by the specialist responsible for the failed gate. Missing/failing broad tests -> QA. Documentation mismatch -> documentation. Persistence failure -> data. Frontend-specific failure -> frontend. Implementation-smoke failure -> original implementation owner.
 
-Include `--route-job` when available and roles/skills actually executed by Codex.
-
-## Hard failover
-- Control Plane unavailable: Codex performs the request; do not call Qwen behind the router.
-- Worker unavailable/technical failure: Codex takes over.
-- Quality gate failure: one repair attempt, then Codex takeover.
+If the repair fails, stop worker retries and Codex takes over.
 
 ## Research
-Codex performs current/web retrieval and source validation. Qwen may synthesize bounded supplied/local material under the selected route.
+Codex remains responsible for source quality and final synthesis. A worker may perform bounded web research only when the Windows gateway exposes web tools, the delegated task benefits from current/external information, and the user has not prohibited internet use. Current facts used in the final answer still require Codex validation when relevant.
+
+## Hard failover
+- Control Plane unavailable: Codex performs the request.
+- Worker unavailable/technical failure: Codex takes over.
+- Quality/evidence gate failure: one specialist repair, then Codex takeover.
 
 ## Final integration
-Report final route, actual delegation(s), repair attempt if any, takeover if any, gates/evidence, and residual unverified areas.
+Report the final route, actual specialist delegations, repair/takeover if any, gates/evidence and residual unverified areas. Keep this concise unless the user asks for implementation detail.

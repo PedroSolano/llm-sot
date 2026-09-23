@@ -1,4 +1,4 @@
-# Git Registry v10.1.0
+# Git Registry v10.3.0
 
 Esta pasta é **autônoma** e corresponde ao conteúdo do repositório `llm-sot`.
 

@@ -1,5 +1,5 @@
 {
-  "version": "10.1.0",
+  "version": "10.3.0",
   "roles": [
     {
       "id": "factory-lead",
@@ -24,7 +24,8 @@
         "define gates",
         "coordinate handoffs"
       ],
-      "handoff": "Produce a delivery map with owners, dependencies, quality gates and acceptance criteria."
+      "handoff": "Produce a delivery map with owners, dependencies, quality gates and acceptance criteria.",
+      "repair_profile": "factory-lead"
     },
     {
       "id": "product-analysis",
@@ -53,7 +54,8 @@
         "acceptance criteria",
         "scope and assumptions"
       ],
-      "handoff": "Provide unambiguous requirements and testable acceptance criteria."
+      "handoff": "Provide unambiguous requirements and testable acceptance criteria.",
+      "repair_profile": "product-analysis"
     },
     {
       "id": "architecture",
@@ -83,7 +85,8 @@
         "trade-offs",
         "ADRs"
       ],
-      "handoff": "Provide architecture decisions, contracts, constraints and risks before implementation."
+      "handoff": "Provide architecture decisions, contracts, constraints and risks before implementation.",
+      "repair_profile": "architecture"
     },
     {
       "id": "ux-ui",
@@ -111,14 +114,14 @@
         "accessibility",
         "visual consistency"
       ],
-      "handoff": "Provide flows, states, component behavior and accessibility expectations."
+      "handoff": "Provide flows, states, component behavior and accessibility expectations.",
+      "repair_profile": "ux-ui"
     },
     {
       "id": "frontend",
       "agent": "cp-frontend-developer",
       "skills": [
-        "frontend-engineering",
-        "qa-testing"
+        "frontend-engineering"
       ],
       "worker_capable": true,
       "keywords": [
@@ -143,15 +146,18 @@
         "accessibility",
         "frontend tests"
       ],
-      "handoff": "Implement against approved UX/API contracts and provide tests/build evidence."
+      "handoff": "Implement only bounded frontend behavior against approved contracts. Do not own the broad QA suite or documentation phase.",
+      "repair_profile": "frontend",
+      "evidence_requirements": [
+        "workspace_changes"
+      ]
     },
     {
       "id": "backend",
       "agent": "cp-backend-developer",
       "skills": [
         "backend-engineering",
-        "api-contracts",
-        "qa-testing"
+        "api-contracts"
       ],
       "worker_capable": true,
       "keywords": [
@@ -176,14 +182,17 @@
         "validation",
         "backend tests"
       ],
-      "handoff": "Implement bounded backend behavior against architecture/contracts and provide tests."
+      "handoff": "Implement only bounded backend/domain/API behavior against approved contracts. Do not own the broad QA suite or documentation phase. Return implementation evidence.",
+      "repair_profile": "backend",
+      "evidence_requirements": [
+        "workspace_changes"
+      ]
     },
     {
       "id": "data",
       "agent": "cp-data-engineer",
       "skills": [
-        "data-persistence",
-        "qa-testing"
+        "data-persistence"
       ],
       "worker_capable": true,
       "keywords": [
@@ -209,7 +218,11 @@
         "integrity",
         "performance"
       ],
-      "handoff": "Provide schema/migration changes, rollback considerations and data validation."
+      "handoff": "Implement only bounded persistence/schema/query work. Do not own the broad QA suite. Return changed persistence artifacts and focused validation evidence.",
+      "repair_profile": "data",
+      "evidence_requirements": [
+        "workspace_changes"
+      ]
     },
     {
       "id": "qa",
@@ -240,7 +253,12 @@
         "regression",
         "evidence"
       ],
-      "handoff": "Return test coverage, execution evidence, failures and residual risks."
+      "handoff": "Own the QA phase after implementation exists. Create/update test artifacts, execute the relevant suite, and return concrete command/exit-code evidence. Never claim completion without test files and an executed passing test command when automation is feasible.",
+      "repair_profile": "qa",
+      "evidence_requirements": [
+        "test_files_present",
+        "test_command_passed"
+      ]
     },
     {
       "id": "security",
@@ -275,7 +293,8 @@
         "secure defaults",
         "abuse cases"
       ],
-      "handoff": "Return security requirements, findings, mitigations and blocking/non-blocking risks."
+      "handoff": "Return security requirements, findings, mitigations and blocking/non-blocking risks.",
+      "repair_profile": "security"
     },
     {
       "id": "devops-platform",
@@ -308,7 +327,11 @@
         "deployment safety",
         "supply chain"
       ],
-      "handoff": "Provide reproducible pipeline/IaC changes, validation and rollback path."
+      "handoff": "Provide reproducible pipeline/IaC changes, validation and rollback path.",
+      "repair_profile": "devops-platform",
+      "evidence_requirements": [
+        "workspace_changes"
+      ]
     },
     {
       "id": "sre-observability",
@@ -343,7 +366,8 @@
         "runbooks",
         "operability"
       ],
-      "handoff": "Provide operational signals, thresholds, dashboards/alerts and runbook impact."
+      "handoff": "Provide operational signals, thresholds, dashboards/alerts and runbook impact.",
+      "repair_profile": "sre-observability"
     },
     {
       "id": "code-review",
@@ -368,7 +392,8 @@
         "consistency",
         "risk"
       ],
-      "handoff": "Return actionable findings ordered by severity with verification notes."
+      "handoff": "Return actionable findings ordered by severity with verification notes.",
+      "repair_profile": "code-review"
     },
     {
       "id": "release",
@@ -396,7 +421,9 @@
         "rollback",
         "go/no-go evidence"
       ],
-      "handoff": "Return release checklist, version/changelog and rollback/readiness status."
+      "handoff": "Return release checklist, version/changelog and rollback/readiness status.",
+      "repair_profile": "release",
+      "evidence_requirements": []
     },
     {
       "id": "documentation",
@@ -424,7 +451,11 @@
         "developer docs",
         "consistency"
       ],
-      "handoff": "Return audience-appropriate docs validated against the implemented behavior."
+      "handoff": "Own the documentation phase only after behavior is stable. Update documentation files and cross-check them against implemented behavior.",
+      "repair_profile": "documentation",
+      "evidence_requirements": [
+        "documentation_files_changed"
+      ]
     },
     {
       "id": "debugging",
@@ -455,7 +486,11 @@
         "verify root cause",
         "regression test"
       ],
-      "handoff": "Return reproduced symptoms, root cause evidence, fix scope and regression checks."
+      "handoff": "Return reproduced symptoms, root cause evidence, fix scope and regression checks.",
+      "repair_profile": "debugging",
+      "evidence_requirements": [
+        "verification_command_passed"
+      ]
     }
   ]
 }

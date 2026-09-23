@@ -1,12 +1,21 @@
 ---
 name: orchestration
-description: Route through the Control Plane and execute CODEX/WORKER/HYBRID with bounded worker jobs, one repair attempt, and failover.
+description: Route through the Control Plane and execute CODEX/WORKER/HYBRID with specialist jobs, evidence gates, one gate-directed repair, and failover.
 ---
 
 The FINAL route is authoritative.
 
-For `CODEX`, execute directly. For `WORKER`, delegate bounded mechanical/execution-heavy work. For `HYBRID`, Codex owns framing/contracts/acceptance criteria and final integration/review; follow `worker_plan` sequentially.
+For HYBRID, follow `worker_plan` sequentially. Each plan item is a separate specialist job unless Codex has objective evidence that two listed units are inseparable.
 
-After every worker job run the gate. First gate failure: exactly one `remote-code-worker --repair-of JOB_ID --feedback ...`. Second failure: Codex takeover. Never retry the worker a second time for the same root job.
+Pass the plan item's `profile`, `agent` and `skills` to `remote-code-worker`. Do not silently merge QA or documentation back into an implementation job.
 
-Emit `codex-factory-event` with the final worker outcome. Skills/agents never change the final route.
+After every worker job, inspect its returned evidence and run `gate_after`.
+
+On first gate failure, use exactly one repair:
+`remote-code-worker --repair-of JOB_ID --repair-gate GATE --feedback "<objective failures>"`
+
+If the Control Plane provided `repair_profile`, pass it as `--repair-profile`. The client also infers common specialists from gate/feedback as a fallback.
+
+Second failure for the same root job means Codex takeover. Never create an unbounded retry loop.
+
+Emit `codex-factory-event` with the final worker outcome.

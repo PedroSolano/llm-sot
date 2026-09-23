@@ -1,12 +1,12 @@
 {
-  "version": "10.1.0",
+  "version": "10.3.0",
   "principles": {
     "selective_roles": "Do not invoke every discipline mechanically; select only roles relevant to the change.",
     "route_authority": "Control Plane route remains authoritative.",
     "handoff": "Each phase must hand off explicit artifacts/constraints to the next phase.",
-    "quality": "Code-changing work requires QA evidence and code review before final delivery.",
-    "worker_job_size": "Prefer small bounded specialist worker jobs with one measurable gate after each job.",
-    "repair_budget": "A failed worker delivery gets at most one worker repair attempt using objective gate feedback; after that Codex takes over.",
+    "quality": "Worker completion requires objective evidence defined by the selected specialist profile. QA is not complete without test artifacts plus an executed passing test command.",
+    "worker_job_size": "Use one specialist responsibility per worker job. Backend, data, frontend, QA, documentation and DevOps are separate jobs when independently verifiable.",
+    "repair_budget": "A failed delegated unit gets at most one specialist repair attempt. The repair owner is chosen from the failed gate/profile rather than blindly reusing the original worker profile.",
     "worker_route_semantics": "WORKER is for bounded mechanical/execution-heavy work without substantial Codex pre/post judgment. Codex-owned framing plus worker execution plus Codex review is HYBRID."
   },
   "workflows": {
@@ -86,19 +86,39 @@
     "max_repair_attempts": 1,
     "sequence": [
       "Codex defines bounded handoff and measurable gate",
-      "Worker executes one specialist job",
+      "Worker executes exactly one specialist job",
+      "Worker must return profile-specific objective evidence",
       "Codex runs the gate",
-      "If gate fails: one repair job receives objective failures and original contract",
+      "If gate fails: exactly one specialist repair is routed to the role responsible for that failed gate",
       "Codex reruns the gate",
       "If still failing: Codex takeover",
       "Codex emits final factory outcome telemetry"
     ],
     "preferred_decomposition": {
-      "backend-data": "Backend/domain/API plus tightly coupled persistence only",
+      "backend": "Backend/domain/API implementation only",
+      "data": "Persistence/schema/query work as a separate unit when independently verifiable",
       "frontend": "Frontend implementation only",
-      "qa": "Focused test implementation/execution after implementation exists",
-      "documentation": "Documentation after behavior is stable",
-      "devops-platform": "CI/CD/IaC as a separate bounded job"
+      "qa": "Test implementation and execution only, after implementation exists",
+      "documentation": "Documentation only, after behavior is stable",
+      "devops-platform": "CI/CD/container/IaC as a separate bounded unit"
+    },
+    "required_evidence_examples": {
+      "backend": [
+        "workspace_changes"
+      ],
+      "data": [
+        "workspace_changes"
+      ],
+      "frontend": [
+        "workspace_changes"
+      ],
+      "qa": [
+        "test_files_present",
+        "test_command_passed"
+      ],
+      "documentation": [
+        "documentation_files_changed"
+      ]
     }
   }
 }

@@ -149,7 +149,7 @@
     "detailed",
     "well-structured"
   ],
-  "policy_version": "10.1.0",
+  "policy_version": "10.3.0",
   "factory_domains": [
     {
       "id": "factory-lead",
@@ -614,8 +614,22 @@
   "worker_execution_policy": {
     "repair_budget": 1,
     "sequential_jobs": true,
-    "max_recommended_worker_jobs": 4,
+    "max_recommended_worker_jobs": 6,
     "worker_only_requires_mechanical_intent": true,
-    "codex_ownership_plus_worker_execution_is_hybrid": true
+    "codex_ownership_plus_worker_execution_is_hybrid": true,
+    "specialist_jobs": true,
+    "gate_specialist_repair": true,
+    "mandatory_worker_evidence": true
+  },
+  "gate_repair_profiles": {
+    "implementation-smoke": "backend",
+    "persistence-smoke": "data",
+    "frontend-check": "frontend",
+    "qa": "qa",
+    "full-relevant-test-suite": "qa",
+    "technical-accuracy": "documentation",
+    "technical-accuracy-review": "documentation",
+    "build-or-iac-validate": "devops-platform",
+    "release-readiness": "release"
   }
 }
